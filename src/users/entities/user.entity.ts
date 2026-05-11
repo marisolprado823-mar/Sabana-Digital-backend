@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Livestock } from '../../livestock/entities/livestock.entity'; 
 
 @Entity()
 export class User {
@@ -15,5 +16,9 @@ export class User {
   password: string; 
 
   @Column({ default: 'user' }) 
-role: string;
+  role: string;
+
+  
+  @OneToMany(() => Livestock, (livestock) => livestock.user)
+  livestock: Livestock[];
 }

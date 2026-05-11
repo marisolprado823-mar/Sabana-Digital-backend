@@ -3,53 +3,32 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WeightRecord } from './entities/weight-record.entity';
 import { CreateWeightRecordDto } from './dto/create-weight-record.dto';
-import { UpdateWeightRecordDto } from './dto/update-weight-record.dto'; 
-import { AnimalsService } from '../animals/animals.service';
+import { LivestockService } from '../livestock/livestock.service';
 
 @Injectable()
 export class WeightRecordsService {
   constructor(
     @InjectRepository(WeightRecord)
-    private readonly weightRepository: Repository<WeightRecord>,
-    private readonly animalsService: AnimalsService,
+    private readonly weightRecordRepository: Repository<WeightRecord>,
+    private readonly livestockService: LivestockService,
   ) {}
 
-  async create(createDto: CreateWeightRecordDto) {
-    
-    await this.animalsService.findOne(createDto.animalId);
-    
-    const record = this.weightRepository.create(createDto);
-    return await this.weightRepository.save(record);
+  async create(createWeightRecordDto: CreateWeightRecordDto) {
+    await this.livestockService.findOne(createWeightRecordDto.animalId);
+    const record = this.weightRecordRepository.create(createWeightRecordDto);
+    return await this.weightRecordRepository.save(record);
   }
 
   async findAll() {
-    return await this.weightRepository.find({
-      relations: ['animal'] 
-    });
+    return await this.weightRecordRepository.find({ relations: ['animal'] });
   }
 
   async findOne(id: number) {
-    const record = await this.weightRepository.findOne({
+    const record = await this.weightRecordRepository.findOne({
       where: { id },
-      relations: ['animal']
+      relations: ['animal'],
     });
-
-    if (!record) {
-      throw new NotFoundException(`El registro de peso con ID ${id} no existe`);
-    }
+    if (!record) throw new NotFoundException('Registro de peso no encontrado');
     return record;
-  }
-
-  
-  async update(id: number, updateDto: UpdateWeightRecordDto) {
-    const record = await this.findOne(id);
-    const updatedRecord = this.weightRepository.merge(record, updateDto);
-    return await this.weightRepository.save(updatedRecord);
-  }
-
-  
-  async remove(id: number) {
-    const record = await this.findOne(id);
-    return await this.weightRepository.remove(record);
   }
 }

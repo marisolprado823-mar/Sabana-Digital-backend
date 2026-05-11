@@ -4,18 +4,18 @@ import { Repository } from 'typeorm';
 import { HealthEvent } from './entities/health-event.entity';
 import { CreateHealthEventDto } from './dto/create-health-event.dto';
 import { UpdateHealthEventDto } from './dto/update-health-event.dto';
-import { AnimalsService } from '../animals/animals.service';
+import { LivestockService } from '../livestock/livestock.service';
 
 @Injectable()
 export class HealthEventsService {
   constructor(
     @InjectRepository(HealthEvent)
     private readonly healthRepository: Repository<HealthEvent>,
-    private readonly animalsService: AnimalsService,
+    private readonly livestockService: LivestockService,
   ) {}
 
   async create(createDto: CreateHealthEventDto) {
-    await this.animalsService.findOne(createDto.animalId);
+    await this.livestockService.findOne(createDto.animalId);
     const event = this.healthRepository.create(createDto);
     return await this.healthRepository.save(event);
   }

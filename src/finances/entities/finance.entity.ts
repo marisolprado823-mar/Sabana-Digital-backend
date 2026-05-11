@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn } from 'typeorm';
-import { Animal } from '../../animals/entities/animal.entity';
+import { Livestock } from '../../livestock/entities/livestock.entity';
 import { User } from '../../users/entities/user.entity';
 
 @Entity('finances')
@@ -25,8 +25,8 @@ export class Finance {
   @Column()
   userId!: number;
 
-  @ManyToOne(() => Animal, (animal) => animal.finances, { onDelete: 'CASCADE' })
-  animal!: Animal;
+  @ManyToOne(() => Livestock, (livestock) => livestock.id, { onDelete: 'CASCADE' })
+  animal!: Livestock;
 
   @ManyToOne(() => User, (user) => user.id)
   user!: User;

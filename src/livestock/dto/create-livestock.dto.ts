@@ -1,24 +1,44 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsNotEmpty, Min } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'; 
 
 export class CreateLivestockDto {
-  @ApiProperty({ example: 'Bovino' })
+  @ApiProperty({ description: 'Nombre del animal', example: 'Lola' }) 
+  @IsString()
+  @IsNotEmpty({ message: 'El nombre es obligatorio' })
+  name: string;
+
+  @ApiProperty({ description: 'Especie del animal', example: 'Vacuno' }) 
   @IsString()
   @IsNotEmpty()
-  species!: string;
+  species: string;
 
-  @ApiProperty({ example: 'Brahman' })
+  @ApiProperty({ description: 'Raza del animal', example: 'Brahman' }) 
   @IsString()
   @IsNotEmpty()
-  breed!: string;
+  breed: string;
 
-  @ApiProperty({ example: 450 })
+  @ApiProperty({ description: 'Peso actual en kg', example: 450.5 }) 
+  @IsNumber()
+  @Min(0)
+  weight: number;
+
+  @ApiProperty({ description: 'Peso inicial', example: 30, required: false }) 
+  @IsOptional()
+  @IsNumber()
+  initialWeight?: number;
+
+  @ApiProperty({ description: 'Estado actual', default: 'Activo' }) 
+  @IsOptional()
+  @IsString()
+  status?: string;
+
+  @ApiProperty({ description: 'ID de la granja', example: 1 })
   @IsNumber()
   @IsNotEmpty()
-  weight!: number;
+  farmId: number;
 
-  @ApiProperty({ example: 1 })
+  @ApiProperty({ description: 'ID del usuario dueño', example: 1 }) 
   @IsNumber()
   @IsNotEmpty()
-  farmId!: number;
+  userId: number;
 }

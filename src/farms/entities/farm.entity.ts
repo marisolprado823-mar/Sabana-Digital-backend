@@ -1,20 +1,17 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Animal } from '../../animals/entities/animal.entity';
+import { Livestock } from '../../livestock/entities/livestock.entity';
 
-@Entity('farms')
+@Entity()
 export class Farm {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id: number;
 
   @Column()
-  name!: string;
+  name: string;
 
   @Column()
-  location!: string;
+  location: string;
 
-  @Column()
-  ownerName!: string;
-
-  @OneToMany(() => Animal, (animal) => animal.farm)
-  animals!: Animal[];
+  @OneToMany(() => Livestock, (livestock) => livestock.farm)
+  livestock: Livestock[];
 }

@@ -1,25 +1,25 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne } from 'typeorm';
-import { Animal } from '../../animals/entities/animal.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
+import { Livestock } from '../../livestock/entities/livestock.entity';
 
-@Entity('health_events')
+@Entity()
 export class HealthEvent {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  type: string; 
+  type: string;
 
   @Column()
   description: string;
 
-  @Column({ type: 'date' })
-  eventDate: Date;
+  @Column()
+  date: Date;
 
   @Column()
   animalId: number;
 
-  @ManyToOne(() => Animal, (animal) => animal.id, { onDelete: 'CASCADE' })
-  animal: Animal;
+  @ManyToOne(() => Livestock, (livestock) => livestock.id, { onDelete: 'CASCADE' })
+  animal: Livestock;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -1,20 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Animal } from '../../animals/entities/animal.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Livestock } from '../../livestock/entities/livestock.entity';
 
-@Entity('weight_records')
+@Entity()
 export class WeightRecord {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id: number;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
-  weight!: number;
-
-  @Column({ type: 'date' })
-  date!: Date;
+  weight: number;
 
   @Column()
-  animalId!: number;
+  date: Date;
 
-  @ManyToOne(() => Animal, (animal) => animal.finances)
-  animal!: Animal;
+  @Column()
+  animalId: number;
+
+  @ManyToOne(() => Livestock, (livestock) => livestock.id, { onDelete: 'CASCADE' })
+  animal: Livestock;
 }

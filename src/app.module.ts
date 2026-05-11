@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AnimalsModule } from './animals/animals.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { FinancesModule } from './finances/finances.module';
@@ -29,7 +28,7 @@ import { WeightRecordsModule } from './weight-records/weight-records.module';
     }),
     
     
-    AnimalsModule,
+  
     UsersModule,
     AuthModule,
     FinancesModule,
