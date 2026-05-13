@@ -1,6 +1,7 @@
 import { IsString, IsNumber, IsOptional, IsNotEmpty, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger'; 
 
+
 export class CreateLivestockDto {
   @ApiProperty({ description: 'Nombre del animal', example: 'Lola' }) 
   @IsString()
