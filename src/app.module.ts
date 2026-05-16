@@ -25,9 +25,10 @@ import { WeightRecordsModule } from './weight-records/weight-records.module';
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true, 
+      ssl: process.env.NODE_ENV === 'production' || process.env.DB_HOST?.includes('render.com')
+        ? { rejectUnauthorized: false }
+        : false,
     }),
-    
-    
   
     UsersModule,
     AuthModule,
