@@ -20,9 +20,10 @@ import { WeightRecordsModule } from './weight-records/weight-records.module';
       type: 'postgres',
       host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT || '5432'), 
-      username: process.env.DB_USERNAME,
+      // Usamos una alternativa segura por si acaso:
+      username: process.env.DB_USERNAME || 'sabana_db_user',
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+      database: process.env.DB_DATABASE || 'sabana_db',
       autoLoadEntities: true,
       synchronize: true, 
       ssl: process.env.NODE_ENV === 'production' || process.env.DB_HOST?.includes('render.com')
